@@ -1,4 +1,4 @@
-var bizTypes = [0, 2, 3, 4, 100, 101, 102, 103, 104, 105, 107, 109, 110, 1000, 1100];
+var bizTypes = [0, 2, 3, 4, 100, 101, 102, 103, 104, 105, 107, 109, 110, 111, 1000, 1100];
 var uids = require('../IMBlackListData');
 var expireTime = 30 * 24 * 60 * 60;  // 默认禁言30天
 var operator = "admin";
