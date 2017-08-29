@@ -1,21 +1,21 @@
 var bizTypes = [0, 2, 3, 4, 100, 101, 102, 103, 104, 105, 107, 109, 110, 111, 1000, 1100];
 var uids = require('../IMBlackListData');
 var expireTime = 30 * 24 * 60 * 60;  // 默认禁言30天
-var operator = "admin";
+var operator = 'admin';
 
-console.log("Black List UIDs: " + uids);
+console.log('Black List UIDs:' + uids);
 
 var forbidRules = [];
 
 for (let i in uids) {
     for (let j in bizTypes) {
         let forbidUnit = {
-            "forbiddenUser": uids[i], 
-            "protectedPartner": bizTypes[j].toString(), 
-            "chatType": "", 
-            "scope": "biztype", 
-            "expireTime": expireTime, 
-            "operator": operator
+            'forbiddenUser': uids[i], 
+            'protectedPartner': bizTypes[j].toString(), 
+            'chatType': '', 
+            'scope': 'biztype', 
+            'expireTime': expireTime, 
+            'operator': operator
         }
 
         forbidRules.push(forbidUnit);
@@ -23,7 +23,7 @@ for (let i in uids) {
 }
 
 var request = require('request');
-var USER_DATA = {"forbidRules": forbidRules};
+var USER_DATA = {'forbidRules': forbidRules};
 console.log(USER_DATA);
 var options = {
     method: 'POST',
