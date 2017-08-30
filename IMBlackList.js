@@ -1,7 +1,14 @@
+var action  = process.argv[2];
+
+if (!action) {
+    action = 'forbid';
+}
+console.log(action);
+
 var bizTypes = [0, 2, 3, 4, 100, 101, 102, 103, 104, 105, 107, 109, 110, 111, 1000, 1100];
 var uids = require('../IMBlackListData');
 var expireTime = 30 * 24 * 60 * 60;  // 默认禁言30天
-var operator = 'admin';
+var operator = 'tour';
 
 console.log('Black List UIDs:' + uids);
 

@@ -26,46 +26,46 @@ keys.filter(k => k[0] !== '!')
     let col = k.substring(0, 1);
     let row = parseInt(k.substring(1));
 
-    if (row <= 2 || row >5000) {
+    if (row <= 2) {
         return;
     }
     
-    if (cursor < row) { // 换行
-        if (data && data.env) {
-            let env = JSON.parse(data.env);
-            //console.log(env.os);
-            // 兼容IOS老版本的value
-            if (env.os.toLowerCase() == 'ios' && env.appVersion < '1.2.0') {
-                //console.log(env.appVersion);
-                data.value = Math.round(data.value * 1000);
-                //console.log(data);
+    // 换行时处理数据
+    if (cursor < row) {
+        cursor = row;
+        let d = data;
+        data = {};
+
+        // 剔除ios特定版本的数据
+        if (d && d.env) {
+            let env = JSON.parse(d.env);
+            if (env.os.toLowerCase() == 'ios' && env.appVersion <= '1.2.0') {
+                return;
             }
         }
-        
-        let tag = JSON.parse(data.tags);
+
         // 剔除掉首页的请求
-        // if (tag.pageCode == '10320664102') {
-            // 计数
-            if (data.name === 'o_localtone_sotp_monitor') {
-                result.tcpcount++;
-                let succ = parseInt(tag.success);
-                if (succ) {
-                    result.tcpsuccess++;
-                    result.tcpavgtime+=data.value;
-                }
-            } else if (data.name === 'o_localtone_soa_monitor') {
-                result.soacount++;
-                let succ = parseInt(tag.success);
-                if (succ) {
-                    result.soasuccess++;
-                    result.soaavgtime+=data.value;
-                }
-            }
+        //if (tag.pageCode == '10320664100') {
+        //    return;
         //}
         
-        //console.log(data);
-        cursor = row;
-        data = {};
+        let tag = JSON.parse(d.tags);
+        // 计数
+        if (d.name === 'o_localtone_sotp_monitor') {
+            result.tcpcount++;
+            let succ = parseInt(tag.success);
+            if (succ) {
+                result.tcpsuccess++;
+                result.tcpavgtime += d.value;
+            }
+        } else if (d.name === 'o_localtone_soa_monitor') {
+            result.soacount++;
+            let succ = parseInt(tag.success);
+            if (succ) {
+                result.soasuccess++;
+                result.soaavgtime += d.value;
+            }
+        }
     }
 
     let value = worksheet[k].v;
