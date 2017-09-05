@@ -4,14 +4,14 @@ var path = require('path');
 var dir = '../';
 
 // 判断日期是否在指定日期范围内
-var startDate  = (process.argv[2] ? process.argv[2] : '0.0').split('.');
-var endDate = (process.argv[3] ? process.argv[3] : '100.100').split('.');
+var startDate  = (process.argv[2] ? process.argv[2] : '1.1').split('.');
+startDate = new Date(2017, startDate[0], startDate[1]);
+var endDate = (process.argv[3] ? process.argv[3] : '12.31').split('.');
+endDate = new Date(2017, endDate[0], endDate[1]);
 function dateInRange(date) {
     date = date.split('.');
-    if (Number.parseInt(date[0]) >= Number.parseInt(startDate[0])
-        && Number.parseInt(date[0]) <= Number.parseInt(endDate[0])
-        && Number.parseInt(date[1]) >= Number.parseInt(startDate[1])
-        && Number.parseInt(date[1]) <= Number.parseInt(endDate[1])) {
+    date = new Date(2017, date[0], date[1]);
+    if (date >= startDate && date <= endDate) {
         return true;
     } else {
         return false;
