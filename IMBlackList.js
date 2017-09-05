@@ -1,11 +1,16 @@
 var uids = require('../IMBlackListData');
 var readlineSync = require('readline-sync');
 
-// 用户必须严格指明操作方法
+// 用户必须明确指出操作方法
 var action  = process.argv[2];
-if (!action) {
+if (action === 'forbid') {
+    var expireTime = 30 * 24 * 60 * 60;  // 默认禁言30天
+} else if (action === 'unforbid') {
+    var expireTime = 1;  // 禁言1秒
+} else {
     process.exit(0);
 }
+
 // 必须要用户手工确认执行
 var answer = readlineSync.question(action + ' ' + uids + ' are you sure?');
 if (answer != 'sure') {
@@ -13,10 +18,7 @@ if (answer != 'sure') {
 }
 
 var bizTypes = [0, 2, 3, 4, 100, 101, 102, 103, 104, 105, 107, 109, 110, 111, 1000, 1100];
-
-var expireTime = 30 * 24 * 60 * 60;  // 默认禁言30天
 var operator = 'tour';
-
 var forbidRules = [];
 
 for (let i in uids) {
