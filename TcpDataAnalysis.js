@@ -5,12 +5,12 @@ var dir = '../';
 
 // 判断日期是否在指定日期范围内
 var startDate  = (process.argv[2] ? process.argv[2] : '1.1').split('.');
-startDate = new Date(2017, startDate[0], startDate[1]);
+startDate = new Date(2017, startDate[0] - 1, startDate[1], 12, 0, 0);
 var endDate = (process.argv[3] ? process.argv[3] : '12.31').split('.');
-endDate = new Date(2017, endDate[0], endDate[1]);
+endDate = new Date(2017, endDate[0] - 1, endDate[1], 12, 0, 0);
 function dateInRange(date) {
     date = date.split('.');
-    date = new Date(2017, date[0], date[1]);
+    date = new Date(2017, date[0] - 1, date[1], 12, 0, 0);
     if (date >= startDate && date <= endDate) {
         return true;
     } else {
