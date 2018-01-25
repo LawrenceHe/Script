@@ -41,7 +41,7 @@ var USER_DATA = {'forbidRules': forbidRules};
 console.log(USER_DATA);
 var options = {
     method: 'POST',
-    url: 'http://webapi.soa.ctripcorp.com:8080/api/11611/forbid/',
+    url: 'http://webapi.soa.ctripcorp.com/api/11611/forbid/',
     headers: {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(JSON.stringify(USER_DATA))
