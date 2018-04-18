@@ -1,6 +1,7 @@
 var csv = require('csv-parser')
 var fs = require('fs')
 var uuid = require('uuid-js')
+var request = require('request')
 
 // 解析CSV文件
 var messageContentInfomation = []
@@ -13,6 +14,19 @@ rs.pipe(csv())
     .on('error', function(err){
         console.log(err)
     })
+
+// 构建请求参数
+function buildRequestOptions(url, user_data) {
+    return {
+        method: 'POST',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(user_data))
+        },
+        json: user_data
+    };
+}
 
 function sendMessageBatch() {
     
@@ -37,18 +51,8 @@ function sendMessageBatch() {
                     "hybirdLink":jumpLink
                 }
             }
-            let url = 'http://webapi.soa.ctripcorp.com/api/11611/CreateThread'
-            let request = require('request')
-            let options = {
-                method: 'POST',
-                url: url,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Length': Buffer.byteLength(JSON.stringify(threadInfo))
-                },
-                json: threadInfo
-            }
-            //console.log(threadInfo)
+            let url = 'http://webapi.soa.ctripcorp.com/api/11611/CreateThread' 
+            let options = buildRequestOptions(url, threadInfo)
             request(options, function(error, response, body){
                 resolve(body)
             })
@@ -69,17 +73,7 @@ function sendMessageBatch() {
                 "resource":"",
             }
             let url = 'http://webapi.soa.ctripcorp.com/api/11611/SendMessage'
-            let request = require('request')
-            let options = {
-                method: 'POST',
-                url: url,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Length': Buffer.byteLength(JSON.stringify(msgInfo))
-                },
-                json: msgInfo
-            }
-            //console.log(msgInfo)
+            let options = buildRequestOptions(url, msgInfo)
             request(options, function(error, response, body){
                 console.log(body)
                 let count = parseInt(index) + 1
